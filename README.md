@@ -1,1 +1,1 @@
-# emacs .emacs.d folder
+# .emacs.d folder
