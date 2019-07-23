@@ -11,4 +11,9 @@
   (progn
     (electric-pair-mode 1)))
 
+(use-package ess
+  :ensure t
+  :config
+  (setq ess-eval-visibly 'nowait))
+
 (provide 'base-functions)
