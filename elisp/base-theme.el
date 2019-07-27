@@ -1,6 +1,6 @@
-(use-package leuven-theme
+(use-package zenburn-theme
   :defer t
   :init
-  (load-theme 'leuven t))
+  (load-theme 'zenburn t))
 
 (provide 'base-theme)
