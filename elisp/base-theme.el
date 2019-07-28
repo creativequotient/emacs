@@ -1,5 +1,5 @@
 (use-package leuven-theme
-  :defer t
+  :ensure nil
   :init
   (load-theme 'leuven t))
 
