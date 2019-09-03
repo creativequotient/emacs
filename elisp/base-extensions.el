@@ -139,18 +139,18 @@
   :config
   (which-key-mode))
 
-(use-package windmove
-  :bind
-  ("C-x <up>" . windmove-up)
-  ("C-x <down>" . windmove-down)
-  ("C-x <left>" . windmove-left)
-  ("C-x <right>" . windmove-right))
+;; (use-package windmove
+;;   :bind
+;;   ("C-x <up>" . windmove-up)
+;;   ("C-x <down>" . windmove-down)
+;;   ("C-x <left>" . windmove-left)
+;;   ("C-x <right>" . windmove-right))
 
 (use-package wgrep)
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
+;; (use-package yasnippet
+;;   :config
+;;   (yas-global-mode 1))
 
 
 (use-package rainbow-mode

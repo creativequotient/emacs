@@ -16,4 +16,11 @@
   :config
   (setq ess-eval-visibly 'nowait))
 
+(use-package rainbow-mode
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+  :config
+  (rainbow-mode t) ;; #0af
+  )
+
 (provide 'base-functions)
