@@ -30,3 +30,6 @@
                                               ("-o" "ForwardX11=yes")))
                  (tramp-default-port         22)))
   (tramp-set-completion-function "sshx11" tramp-completion-function-alist-ssh))
+
+;;; Use spaces for automatic indentation
+(setq-default indent-tabs-mode nil)
