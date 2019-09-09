@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#Move files into appropriate directories
+mkdir /mnt/cbis/home/marcus/IFN/fastq/
+mkdir /mnt/cbis/home/marcus/IFN/results/
+
+while read filename; do
+    mkdir /mnt/cbis/home/marcus/IFN/fastq/${filename}/
+    mv ${filename}.sra /mnt/cbis/home/marcus/IFN/fastq/${filename}/${filename}.sra
+done < /mnt/cbis/home/marcus/IFN/SRR_Acc_List.txt
+
+while read filename; do
+    mkdir /mnt/cbis/home/marcus/IFN/results/${filename}
+    fastq-dump --split-files --gzip -O /mnt/cbis/home/marcus/IFN/fastq/${filename} /mnt/cbis/home/marcus/IFN/fastq/${filename}/${filename}.sra
+    kallisto quant -i /mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/Homo_sapiens.GRCh38.cdna.all.idx -b 100 -t 16 -o /mnt/cbis/home/marcus/IFN/results/${filename}/ <(zcat /mnt/cbis/home/marcus/IFN/fastq/${filename}/${filename}_1.fastq.gz) <(zcat /mnt/cbis/home/marcus/IFN/fastq/${filename}/${filename}_2.fastq.gz)
+done < /mnt/cbis/home/marcus/IFN/SRR_Acc_List.txt

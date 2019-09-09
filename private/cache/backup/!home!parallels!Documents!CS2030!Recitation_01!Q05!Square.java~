@@ -1,0 +1,16 @@
+public Square extends Rectangle {
+
+    public Square(double width) {
+	super(width, width);
+    }
+
+    @Override
+    public Square setHeight(double height) {
+	return new Square(height);
+    }
+
+    @Override
+    public Square setWidth(double width) {
+	return new Square(width);
+    }
+}

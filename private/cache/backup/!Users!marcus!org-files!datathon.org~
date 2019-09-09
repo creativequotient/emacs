@@ -1,0 +1,113 @@
+#+TODO: LOW(l) MED(m) HIGH(h) | CHOSEN(c)
+
+* Available datasets
+** Imaging
+*** Chest xray (MIMIC)
+*** Pneumothorax dataset
+*** Melanoma/skin dataset
+** Critical care track
+*** E-ICU
+** Synthetic dataset
+*** Based on NUHS patient dataset
+**** Medication
+**** Demographics
+**** etc
+* Physician pitches
+** MED Will Loh
+*** MIMIC3 Dataset
+*** Predicitve monitoring for survival and neurological recovery of ICU patients
+*** *What factors predict for good neurological outcome after severe head injury?*
+** MED Benjamin Siu
+***
+*** MIMIC3 Dataset
+*** Predicting mortality in pateints with acute respiratory distress
+*** *Which patient is likely to have a worse of prognosis and is in greater need of care?*
+*** *Classify patients into groups of varying "needs"*
+** LOW See KC
+*** MIMIC3 Dataset
+*** Searching for an optimal blood pressure definition and range
+*** *What are the optimal numbers for blood pressure?*
+** LOW Cheng Yiling
+*** Synthetic dataset
+*** Would changeover months affect patient outcomes?
+** MED Dr Vinod (DXC)
+*** MIMIC3 Dataset
+*** Prediction of utility and futility of RRT in AKI pts
+*** Kidney
+*** Acute kidney injuries
+*** *In an ICU setting, which patients can/need dialysis? Predict which patients to treat with this option?*
+** MED Yau Ying Wei
+*** MIMIC3 Dataset
+*** Optimising blood pressure management in patients with acute haemorrhagic stroke
+*** 20% of patients are independent after a stroke, most become dependent on chronic care after coming out of the hospital
+*** *Blood pressure control -> How does this affect the prognosis? Is it important? Maybe this doesn't really affect prognosis at all*
+** LOW Norris Ling
+*** MIMIC3 + Synthetic dataset
+*** Longtitudinal trends of high risk asthma
+*** *?? What is the problem statement really*
+** HIGH Chia Po Ying
+*** MIMIC dataset
+*** Predictive model for vetilated ICU patients who develop ventilator-assocaited complications
+*** *Patient outcomes from ventilation*
+** HIGH Mark/Mayank
+*** BYOD dataset
+*** Deep-learning algorithm for decision making on short-term vs long-term DAPT after PCI
+*** Blood thinners put patients at risk of bleeding and so what is the optimal duration to put patients on thinners
+*** *Optimal duration for patients to be on two blood thinners (?) after stent insertion*
+** LOW Bryce/Caroline Tee
+*** Synthetic dataset
+*** Role of drug-drug interactions in reactive airway disease and ARDS
+*** Asthma patients
+** MED Byorn
+*** Synthetic dataset
+*** Effects of mild AKI on long-term renal and cardiovascular outcomes - subset to look at post-surgical AKI
+*** AKI -> kidney stuff
+*** AKI -> Kidney disease implication
+** HIGH Kewin Seah
+*** Gastroenteritis
+*** "No one should die from shitting" - haha
+*** *Can we get a risk score for gastoenteritis*
+** CHOSEN Chan Jun Yang
+   CLOSED: [2019-07-19 Fri 22:11]
+*** Synthetic dataset
+*** Prediction of readmissions to ER
+*** 19% of the elderly patients get readmitted within 30 days
+*** LACE
+**** Length of stay
+**** Admissions
+**** C (??)
+**** Emergency presentation
+** HIGH Jonie Sua
+*** Synthetic dataset
+*** What do I call my consultant?
+*** Prediction of night-shift patient deterioration
+*** *Create a predictive model to determine if a patient is going to get worse through the night*
+** LOW Jacob Jeon
+*** MIMIC-CXR dataset
+*** Chest CXR Image
+*** Automatic detection of chest XR data
+** HIGH Shreshth Saini
+*** ISIC dataset
+*** Skin melanoma image analysis
+** HIGH Ng Dianwen
+*** Siims Acr
+*** Pneumothorax dataset
+*** Identify and segment pneumothorax for chest x-ray images
+*** Pneumothorax -> call a doctor!
+*** Can we detect this early and benefit patient management
+* Prediction of remissions back into the ER
+** Information, background and brainstorming
+*** Use non-black box models such as neural networks or even ensembl methods for the matter so as to improve explainability of the model in order to make the project viable in a clinical setting
+*** Stages of production
+**** Data analysis -> what kinds of data do we have right now and can we split the patients into sub-populations (EDA)
+**** Remission within 30 days -> yes/no
+**** Remission within n days -> yes/no
+***** Can we plot a graph of accuracy over time, ie show for how far into the future can we accurately predict
+**** Days to remission -> continuous variable or categories (10/20/30/40/50/60 etc)
+*** Models to consider
+**** Stacking models?
+**** Have a classifier on top to first separate the patients into sub-group
+***** Elderly
+***** Middle-aged
+***** Young
+***** Paedeatric

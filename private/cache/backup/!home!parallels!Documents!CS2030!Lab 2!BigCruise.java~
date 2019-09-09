@@ -1,0 +1,6 @@
+public class BigCruise extends Cruise {
+    
+    public BigCruise(String id, int arrivalTime, int loaders, int serviceTime) {
+	super(id, arrivalTime, loaders, serviceTime);
+    }
+}

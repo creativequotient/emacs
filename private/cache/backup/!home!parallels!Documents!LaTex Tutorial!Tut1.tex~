@@ -1,0 +1,37 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\title{Document 1}
+\author{Marcus Lee \thanks{funded by the Overleaf team}}
+\date{23 July 2019}
+
+\begin{document}
+ 
+\maketitle
+ 
+We have now added a title, author and date to our first \LaTeX{} document!\\
+
+Some of the \textbf{greatest} discoveries in \underline{science} were made by \textbf{\textit{accident}}.
+\begin{itemize}
+  \item The individual entries are indicated with a black dot, a so-called bullet.
+  \item The text in the entries may be of any length.
+\end{itemize}
+
+\section{Part A	}
+\subsection{Section 1.1}
+\paragraph{}
+Potatoes
+
+\section{Part B}
+\begin{equation}
+f(x) = x^2
+\end{equation}
+\begin{flushright}
+testtttttt
+\begin{flushleft}
+estS
+\end{flushleft}
+\end{flushright}
+	
+
+\end{document}

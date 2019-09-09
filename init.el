@@ -14,6 +14,8 @@
 
 (require 'lang-python)
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (with-eval-after-load 'tramp
   (add-to-list 'tramp-methods
                '("sshx11"

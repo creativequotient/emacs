@@ -1,0 +1,11 @@
+* TF Inference Project
+** Visualizations
+*** DONE Create general script to extract visualize specific genes of interest to look at
+    CLOSED: [2019-07-17 Wed 16:32]
+*** TODO Add TSS track and TF binding site track to visualizations
+    SCHEDULED: <2019-07-18 Thu>
+*** TODO Obtain list of genes that are not differentially expressed at gene level but are at TSS level
+* Differential Expression Project
+* UROPS Administrative Taks
+** Register for UROPS online
+   DEADLINE: <2019-07-19 Fri>

@@ -1,0 +1,9 @@
+* Principles
+** Abstraction Barrier
+*** An abstraction barrier is a barrier that exists between *implementer* and *client*.
+*** This barrier *DOES NOT EXIST* on the implementer side. ie an Object can modify the attributes of another instance of the same class even if its marked as private
+** Liskov Substitution Principle
+** Single Responsiblity Principle
+** Open-Closed Principle
+** Interface Segregation Principle
+** Dependency Inversion Principle

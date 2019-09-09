@@ -1,0 +1,7 @@
+(use-package tango-dark-theme
+  :ensure nil
+  :defer t
+  :init
+  (load-theme 'tango-dark t))
+
+(provide 'base-theme)

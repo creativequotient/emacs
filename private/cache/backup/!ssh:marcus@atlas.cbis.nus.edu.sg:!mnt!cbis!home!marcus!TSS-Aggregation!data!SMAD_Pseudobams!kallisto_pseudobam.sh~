@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Base directory on Phoebe where fastq.gz files are located
+phoebe_fp="/mnt/gtklab01/xiaojing/Esther-bactg-smads/data"
+
+# Directory where pseudobam files are to be created
+pseudo_fp="/mnt/cbis/home/marcus/TSS-Aggregation/data/SMAD_Pseudobams"
+
+# Files required by kallisto to generate pseudobam files
+kallisto_idx="/mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/Homo_sapiens.GRCh38.cdna.all.idx"
+kallisto_gtf="/mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/Homo_sapiens.GRCh38.94.gtf.gz"
+kallisto_chom_sizes="/mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/hg38_chrom_sizes.txt"
+
+# Loop through and execute
+while read filename; do
+
+    # Create directories
+    run_dir="${pseudo_fp}/${filename}"
+    mkdir ${run_dir}
+
+    # Conduct kallisto quant
+    kallisto quant -i ${kallisto_idx} -t 16 -o ${run_dir}/ \
+	     --genomebam --gtf ${kallisto_gtf} --chromosomes ${kallisto_chom_sizes} \
+	     <(zcat ${phoebe_fp}/${filename}_R1.fastq.gz) \
+	     <(zcat ${phoebe_fp}/${filename}_R2.fastq.gz)
+
+done < /mnt/cbis/home/marcus/TSS-Aggregation/data/SMAD_Pseudobams/file_names.txt

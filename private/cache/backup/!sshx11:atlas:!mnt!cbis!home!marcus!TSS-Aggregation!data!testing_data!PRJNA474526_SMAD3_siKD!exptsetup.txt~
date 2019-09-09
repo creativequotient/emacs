@@ -1,0 +1,7 @@
+study_accession	sample_accession	secondary_sample_accession	experiment_accession	run_accession	tax_id	scientific_name	instrument_model	library_layout	sra_ftp	sample_title
+PRJNA474526	SAMN09348206	SRS3374075	SRX4161710	SRR7257387	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/007/SRR7257387	HCASMC scrambled siRNA_S17
+PRJNA474526	SAMN09348204	SRS3374076	SRX4161711	SRR7257388	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/008/SRR7257388	HCASMC scrambled siRNA_S18
+PRJNA474526	SAMN09348195	SRS3374077	SRX4161712	SRR7257389	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/009/SRR7257389	HCASMC scrambled siRNA_S19
+PRJNA474526	SAMN09348193	SRS3374078	SRX4161713	SRR7257390	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/000/SRR7257390	HCASMC siSMAD3 knockdown_S23
+PRJNA474526	SAMN09348191	SRS3374079	SRX4161714	SRR7257391	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/001/SRR7257391	HCASMC siSMAD3 knockdown_S24
+PRJNA474526	SAMN09348190	SRS3374080	SRX4161715	SRR7257392	9606	Homo sapiens	Illumina HiSeq 4000	PAIRED	ftp.sra.ebi.ac.uk/vol1/srr/SRR725/002/SRR7257392	HCASMC siSMAD3 knockdown_S25

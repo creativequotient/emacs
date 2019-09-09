@@ -1,0 +1,13 @@
+public class Main {
+    public static void main(String args[]) {
+	Box b = new Box(2,3,4,1.5);
+
+	Volume v = b;
+	Density d = b;
+	Mass m = b;
+
+	System.out.println(b.getVolume());
+	System.out.println(d.getDensity());
+	System.out.println(m.getMass())
+    }
+}

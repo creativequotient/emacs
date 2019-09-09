@@ -1,0 +1,112 @@
+### Required for CLI input into Rscript
+#!/usr/bin/env Rscript
+
+
+### Import required libraries
+suppressMessages({
+  library("sleuth")
+  library(here)
+  library("aggregation")
+  library(tidyverse)
+  library(cowplot)
+  library(GeneOverlap)
+  library(exact2x2)
+  source("functions/analysis_functions.R")
+})
+
+###### CHANGE THESE VARIABLES FOR NEW RUNS #######
+setwd("/mnt/raid0/home/marcus/TSS-Aggregation")
+model <- "PWM"
+mapping_directory <- "data/processed_data/ensembl_GRCh38.94/500_100"
+tss_window_file <- "TSS_windows_500_100.bed.gz"
+results_filepath <- normalizePath(paste0(mapping_directory,"/sleuth"))
+kallisto_directory <- "data/testing_data/STAT3_Ductal/STAT3_HCC70/results/"
+expt_setup_file <- "data/testing_data/STAT3_Ductal/STAT3_HCC70/ExptSetup_HCC70.txt"
+upstream=500
+downstream=100
+##################################################
+
+## ####### FOR CLI RSCRIPT EXECUTION #######
+## CLI_arguments = commandArgs(trailingOnly=TRUE)
+
+## if (length(args) != 0) {
+##   model <- CLI_arguments[1]
+##   mapping_directory <- CLI_arguments[2]
+##   tss_window_file <- CLI_arguments[3]
+##   results_filepath <- CLI_arguments[4]
+##   kallisto_directory <- CLI_arguments[5]
+##   expt_setup_file <- CLI_arguments[6]
+## }
+## #########################################
+
+## Transcripts to Transcription Start Site mappings
+tx2tss_filepath <- file.path(mapping_directory,"sleuth","TSS_aggregation_table.tsv.gz")
+tx2tss <- read_tsv(file=tx2tss_filepath)
+
+### Set up sample to covariates table
+
+# Generate Sample to Covariate table
+s2c <- read_tsv(expt_setup_file)
+s2c <- dplyr::mutate(s2c, path = paste0(kallisto_directory, sample))
+
+### Sleuth (this can be moved ahead of the TF stuff)
+
+## First to TSSs
+
+## Set up Sleuth object
+so_tss <- sleuth_prep(s2c, extra_bootstrap_summary=TRUE, target_mapping = tx2tss, aggregation_column = "TSS")
+
+# Conduct various fits on Sleuth object
+so_tss <- sleuth_fit(so_tss, ~condition, 'full')
+so_tss <- sleuth_fit(so_tss, ~1, 'reduced')
+
+# Conduct likelihood ratio test on fits
+so_tss <- sleuth_lrt(so_tss, 'reduced', 'full')
+
+# Results with p-values aggregated based on TSS_ID
+TSS_agg_table <- sleuth_results(so_tss, 'reduced:full', 'lrt', show_all = FALSE, pval_aggregate = TRUE) %>%
+  as_tibble %>%
+  arrange(qval)
+
+## Second to genes
+
+## Set up Sleuth object. We have to drop the TSS-specific columns so there aren't duplicated rows in the results.
+
+so_gene <- sleuth_prep(s2c, extra_bootstrap_summary=TRUE, target_mapping = select(tx2tss,-TSS), aggregation_column = "symbol")
+
+# Conduct various fits on Sleuth object
+so_gene <- sleuth_fit(so_gene, ~condition, 'full')
+so_gene <- sleuth_fit(so_gene, ~1, 'reduced')
+
+# Conduct likelihood ratio test on fits
+so_gene <- sleuth_lrt(so_gene, 'reduced', 'full')
+
+# Results with p-values aggregated based on GENE_ID
+GENE_agg_table <- sleuth_results(so_gene, 'reduced:full', 'lrt', show_all = FALSE, pval_aggregate = TRUE) %>%
+  as_tibble %>%
+  arrange(qval)
+
+### Lancaster
+
+# Transcription Start Site to Transcription Factor mappings
+tss2tf_filepath <- file.path(mapping_directory,"sleuth", paste0(model,"_TSS_to_TF_map.csv.gz"))
+tss2tf <- read_csv(file=tss2tf_filepath) %>%
+    dplyr::rename(target_id=TSS_ID, TF=TF)
+
+### TSS to TF aggregation
+aggregated_TSS_to_TF <- agg_TSS_to_TF(TSS_agg_table, tss2tf)
+
+aggregated_TSS_to_TF %>% arrange(padj)
+aggregated_TSS_to_TF %>% arrange(padj) %>% head(20)
+aggregated_TSS_to_TF %>% arrange(padj) %>% filter(padj<0.05)
+aggregated_TSS_to_TF %>% arrange(padj) %>% filter(TF == "STAT3")
+
+
+### GENE to TF aggregation
+aggregated_GENE_to_TF <- agg_gene_to_TF(GENE_agg_table, tss2tf)
+
+aggregated_GENE_to_TF %>% arrange(padj) %>% head(20)
+aggregated_GENE_to_TF %>% arrange(padj) %>% filter(padj<0.05)
+
+#write_tsv(aggregated_GENE_to_TF, file.path(results_filepath, paste0(model, "_lancaster_gene_to_TF.tsv")))
+#write_tsv(aggregated_TSS_to_TF, file.path(results_filepath, paste0(model, "_lancaster_TSS_to_TF.tsv")))

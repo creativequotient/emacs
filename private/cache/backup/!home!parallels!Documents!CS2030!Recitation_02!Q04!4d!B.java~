@@ -1,0 +1,8 @@
+class B extends A {
+    void f() {
+	this.f();
+	System.out.println("B f");
+
+	// Results in stackoverflow error because void f() references void f() that references iself recursively
+    }
+}

@@ -1,0 +1,45 @@
+suppressMessages({
+    library(biomaRt)
+    library(GenomicRanges)
+    library(GenomicAlignments)
+    library(GenomicFeatures)
+    library(Gviz)
+    options(ucscChromosomeNames=FALSE)
+})
+
+makeCoverages <- function(bam_files) {
+    output_coverages <- list()
+    # Iterate over bam_files and add coverages to output_coverages
+    for (bam_file in bam_files) {
+        x <- readGAlignments(bam_file)
+        cov <- coverage(x)
+        output_coverages <- append(output_coverages, list(cov))
+    }
+    return(output_coverages)
+}
+
+makeGRs <- function(coverages) {
+    output_GR <- list()
+    for (cov in coverages) {
+        output_GR <- append(output_GR, list(as(cov, "GRanges")))
+    }
+    return(output_GR)
+}
+
+getMaxCoverage <- function(coverages, range) {
+    max_covs <- c()
+    for (cov in coverages) {
+        print(max(cov[cov %over% range]$score))
+        append(max_cov, max(cov[cov %over% range]$score))
+    }
+    return(max(max_covs))
+}
+
+makeDataTracks <- function(grs, name, range, ylim) {
+    output_tracks <- list()
+    for (gr in grs) {
+        track <- DataTrack(gr[gr %over% range], name=name, ylim=ylim)
+        output_tracks <- append(output_tracks, list(track))
+    }
+    return(output_tracks)
+}

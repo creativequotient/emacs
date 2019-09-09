@@ -1,0 +1,29 @@
+class SolidCuboid extends SolidShape {
+
+    double length;
+    double width;
+    double height;
+    double density;
+
+    SolidCuboid(double length, double width, double height, double density) {
+	this.length = length;
+	this.height = height;
+	this.width = width;
+	this.density = density;
+    }
+
+    @Override
+    public double getVolume() {
+	return this.length * this.width * this.height;
+    }
+
+    @Override
+    public double getDensity() {
+	return this.density;
+    }
+
+    @Override
+    public double getMass() {
+	return this.getVolume() * this.getDensity();
+    }
+}

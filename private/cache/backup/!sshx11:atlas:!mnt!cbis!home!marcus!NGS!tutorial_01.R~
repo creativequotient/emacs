@@ -1,0 +1,69 @@
+library(pasillaBamSubset)
+library(TxDb.Dmelanogaster.UCSC.dm3.ensGene)
+
+#f11 <- untreated1_chr4()
+#f12 <- untreated3_chr4()
+
+f11 <- "/mnt/cbis/home/marcus/TSS-Aggregation/data/SMAD_Pseudobams/AC1_S5/split_by_chr/merged.bam"
+library(GenomicRanges)
+library(GenomicAlignments)
+
+x <- readGAlignments(f11)
+xcov <- coverage(x)
+
+xcov
+xcov['5']
+
+z <- GRanges("5",IRanges(180000000,180038259))
+xcov[z]
+
+xnum <- as.numeric(xcov[["5"]][ranges(z)])
+plot(xnum)
+
+y <- readGAlignmentPairs(f12)
+ycov <- coverage(y)
+ynum <- as.numeric(ycov$chr4[ranges(z)])
+plot(xnum, type="l", col="blue", lwd=2, ylim=c(0,500))
+lines(ynum, col="red", lwd=2)
+
+plot(xnum, type="l", col="blue", lwd=2, xlim=c(6200,6600))
+lines(ynum, col="red", lwd=2)
+
+library(biomaRt)
+
+m <- useMart("ensembl", dataset = sh"dmelanogaster_gene_ensembl")
+lf <- listFilters(m)
+lf[grep("name", lf$description, ignore.case=TRUE),]
+
+map <- getBM(mart = m,
+  attributes = c("ensembl_gene_id", "flybasename_gene"),
+  filters = "ensembl_gene_id",
+  values = "FBgn0039907")
+map
+
+library(GenomicFeatures)
+grl <- exonsBy(TxDb.Dmelanogaster.UCSC.dm3.ensGene, by="gene")
+gene <- grl[[map$ensembl_gene_id[1]]]
+gene
+
+rg <- range(gene)
+plot(c(start(rg), end(rg)), c(0,0), type="n", xlab=seqnames(gene)[1], ylab="")
+arrows(start(gene),rep(0,length(gene)),
+       end(gene),rep(0,length(gene)),
+       lwd=3, length=.1,
+       code=ifelse(as.character(strand(gene)[1]) == "+", 2, 1))
+
+library(Gviz)
+gtrack <- GenomeAxisTrack()
+
+atrack <- AnnotationTrack(gene, name="Gene Model")
+plotTracks(list(gtrack, atrack))
+
+xgr <- as(xcov, "GRanges")
+ygr <- as(ycov, "GRanges")
+xgr
+
+dtrack1 <- DataTrack(xgr[xgr %over% z], name="Sample 1")
+dtrack2 <- DataTrack(xgr[xgr %over% z], name="Sample 2")
+plotTracks(list(gtrack, atrack, dtrack1, dtrack2), type="polygon")
+plotTracks(list(dtrack1), type="polygon")

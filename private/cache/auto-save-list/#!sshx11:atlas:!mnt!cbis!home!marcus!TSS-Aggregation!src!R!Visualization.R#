@@ -1,0 +1,129 @@
+suppressMessages({
+    library(biomaRt)
+    library(GenomicRanges)
+    library(GenomicAlignments)
+    library(GenomicFeatures)
+    library(Gviz)
+    library(tidyverse)
+    source("viz_functions.R")
+    options(ucscChromosomeNames=FALSE)
+})
+
+# Customize Gviz scheme
+scheme <- getScheme()
+scheme$DataTrack$col.histogram <- "#cc0000"
+scheme$DataTrack$fill.histogram <- "#cc0000"
+addScheme(scheme, "custom_1")
+options(Gviz.scheme = "custom_1")
+
+# Filepaths for .bam files
+control1 <- "/mnt/gtklab01/marcus/TGFb_Pseudobams/AC1_S5/AC1_S5_mapped.bam"
+control2 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AC3_S6/AC3_S6_mapped.bam"
+control3 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AC4_S7/AC4_S7_mapped.bam"
+control4 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AC5_S8/AC5_S8_mapped.bam"
+control_files <- c(control1, control2, control3, control4)
+
+treatment1 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AT1_S1/AT1_S1_mapped.bam"
+treatment2 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AT2_S2/AT2_S2_mapped.bam"
+treatment3 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AT3_S3/AT3_S3_mapped.bam"
+treatment4 <- "/mnt/gtklab01/marcus/TGFb_pseudobams/AT5_S4/AT5_S4_mapped.bam"
+treatment_files <- c(treatment1, treatment2, treatment3, treatment4)
+
+# For testing purposes with only 2 tracks
+control_files <- c(control1)
+treatment_files <- c(treatment1)
+
+# Set up TSS windows
+tss_window_file <- "/mnt/cbis/home/marcus/TSS-Aggregation/data/processed_data/ensembl_GRCh38.94/500_100/TSS_windows_500_100.bed.gz"
+tss_windows <- read_tsv(tss_window_file, col_names=c("chrom", "start", "stop", "transcript_id", "gene_id", "strand", "gene_symbol")) %>% mutate(chrom=str_replace(chrom,"chr",""))
+tss_windows <- makeGRangesFromDataFrame(tss_windows, seqnames.field=c("chrom"))
+
+# Set up TFBF data (uncomment the desired line to use the different Unibind models)
+# tfbs_file <- "/mnt/raid0/home/marcus/TSS-Aggregation/data/reference_data/Unibind/DNAshaped_TFBS_complete.bed.gz"
+# tfbs_file <- "/mnt/raid0/home/marcus/TSS-Aggregation/data/reference_data/Unibind/PWM_TFBS_complete.bed.gz"
+tfbs_file <- "/mnt/raid0/home/marcus/TSS-Aggregation/data/reference_data/Unibind/BEM_TFBS_complete.bed.gz"
+# tfbs_file <- "/mnt/raid0/home/marcus/TSS-Aggregation/data/reference_data/Unibind/TFFM_TFBS_complete.bed.gz"
+tfbs_complete <- read_tsv(tfbs_file, col_names=c("chrom", "start", "stop", "TF_motif", "nil", "strand")) %>%
+    separate(TF_motif, into=c("TF", "motif"), sep="_") %>%
+    select(chrom, start, stop, strand, TF) %>%
+    mutate(chrom=str_replace(chrom,"chr",""))
+
+# Select the desired TF to use by specifying filter condition
+tfbs <- tfbs_complete %>%
+    filter(TF == "SMAD3")
+tfbs <- makeGRangesFromDataFrame(tfbs, seqnames.field=c("chrom"), keep.extra.columns=TRUE)
+
+# Get GRCh38 Release 96 Homo Sapiens Tx
+ensembl96 <- useMart(host='http://oct2018.archive.ensembl.org',
+                     biomart='ENSEMBL_MART_ENSEMBL',
+                     dataset='hsapiens_gene_ensembl')
+
+# Get column attributes if needed
+# lf <- listFilters(ensembl96)
+# lf[grep("name", lf$description, ignore.case=TRUE),]
+# la <- listAttributes(ensembl96)
+# la[grep("gene", lf$description, ignore.case=TRUE),]
+
+# Make TxDb from GTF
+gtf_fp <- "/mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/Homo_sapiens.GRCh38.94.gtf.gz"
+txdb <- makeTxDbFromGFF(gtf_fp, format="gtf")
+grl <- exonsBy(txdb, by=c("gene"))
+
+# Generate coverages from control and treatment BAM files
+control_coverages <- makeCoverages(control_files)
+treatment_coverages <- makeCoverages(treatment_files)
+
+# Convert coverages to GenomicRanges object
+control_gr <- makeGRs(control_coverages)
+treatment_gr <- makeGRs(treatment_coverages)
+
+# Obtain gene information based on gene symbol (specify in values)
+gene_map <- getBM(mart = ensembl96,
+  attributes = c("chromosome_name", "ensembl_gene_id", "hgnc_symbol", "start_position", "end_position"),
+  filters = "hgnc_symbol",
+  values = "SMAD3")
+
+gene_map
+
+gene <- grl[[gene_map$ensembl_gene_id[1]]]
+chrom <- gene_map$chromosome_name[1]
+start_pos <- gene_map$start_position[1]
+end_pos <- gene_map$end_position[1]
+
+# Set up Gviz tracks for plotting
+gtrack <- GenomeAxisTrack()
+
+grtrack <- GeneRegionTrack(txdb, name="Gene Model", chromosome=chrom, start=start_pos, end=end_pos)
+
+tfbstrack <- AnnotationTrack(tfbs, name="TFBS", chromosome=chrom, start=start_pos, end=end_pos, shape="box")
+displayPars(tfbstrack) <- list(fontcolor.feature="darkblue")
+
+tsstrack <- AnnotationTrack(tss_windows, name="TSS", chromosome=chrom, start=start_pos, end=end_pos, shape="box")
+displayPars(tsstrack) <- list(fill="#3f4b60")
+
+z <- GRanges(chrom, IRanges(start_pos, end_pos))
+max_coverage <- getMaxCoverage(c(control_gr,treatment_gr), z)
+control_dtracks <- makeDataTracks(control_gr, "Control", z, c(0,max_coverage))
+treatment_dtracks <- makeDataTracks(treatment_gr, "Treatment", z, c(0, max_coverage))
+
+# Options for plotTracks types
+# "p", "l", "b", "a", "s", "g", "r", "S",
+# "smooth", "polygon", "horizon", "histogram",
+# "mountain", "h", "boxplot", "gradient", "heatmap", "confint"
+tracks <- list(gtrack, tfbstrack, tsstrack, grtrack)
+tracks <- append(tracks, control_dtracks)
+tracks <- append(tracks, treatment_dtracks)
+
+#pdf("../../SMAD7.pdf", width=8, height=12,paper="special")
+# Change sizes to be a vector of length n = number of tracks, ie if 8 replicates are used, sizes needs to be of length n = 10
+# For plotting with only 2 BAM files, use sizes=c(1,0.5,2,4,4)
+plotTracks(tracks,
+           type="histogram",
+           from=start_pos,
+           to=end_pos,
+           transcriptAnnotation="symbol",
+           background.panel="#FFFF1F0",
+           background.title="darkblue",
+           reverseStrand=FALSE,
+           sizes=c(1,0.5,0.5,2,2,2))
+#dev.off()

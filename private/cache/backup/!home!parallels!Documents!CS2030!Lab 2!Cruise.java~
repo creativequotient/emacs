@@ -1,0 +1,40 @@
+public class Cruise {
+
+    private final String id;
+    private final int arrivalTime;
+    private final int loaders;
+    private final int serviceTime;
+
+    public Cruise(String id, int arrivalTime) {
+        this.id = id;
+        this.arrivalTime = arrivalTime;
+	this.loaders = 1;
+	this.serviceTime = 30;
+    }
+
+    protected Cruise(String id, int arrivalTime, int loaders, int serviceTime) {
+        this.id = id;
+        this.arrivalTime = arrivalTime;
+	this.loaders = loaders;
+	this.serviceTime = serviceTime;
+    }
+
+    public int getArrivalTime() {
+        int hours = (int) Math.floor(this.arrivalTime / 100);
+        int mins = this.arrivalTime % 100;
+        return hours * 60 + mins;
+    }
+
+    public int getNumLoadersRequired() {
+        return this.loaders;
+    }
+
+    public int getServiceCompletionTime() {
+        return getArrivalTime() + this.serviceTime;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s@%04d", this.id, this.arrivalTime);
+    }
+}

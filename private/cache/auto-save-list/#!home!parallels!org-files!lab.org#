@@ -1,0 +1,32 @@
+#+TODO: TODO(t) ONHOLD(h) | DONE(d)
+
+* TF Inference Project
+** Visualizations
+*** GViz
+**** DONE Create general script to extract visualize specific genes of interest to look at
+     CLOSED: [2019-07-18 Thu 15:53]
+**** DONE Add TSS track and TF binding site track to visualizations
+     CLOSED: [2019-07-18 Thu 15:48] SCHEDULED: <2019-07-18 Thu>
+***** Added TSS track <2019-07-18 Thu>
+***** Added TFBS track <2019-07-18 Thu>
+**** ONHOLD Obtain list of genes that are not differentially expressed at gene level but are at TSS level
+     1) Use sleuth to generate TSS-binding sites which are significantly differentially expressed
+     2) Find subset of genes that do not overlap with DE genes from gene level aggregation
+     3) Explore these regions of the genome
+*** Volcano plots
+** Genomes and AI Poster Presentation
+   DEADLINE: <2019-10-02 Wed>
+* Differential Expression Project
+* Chromatin Dynamics Project
+** SRIS Administrative Takss
+*** TODO Exit clearance
+    SCHEDULED: <2019-07-23 Tue>
+** Draft methods and materials for the following
+   DEADLINE: <2019-07-28 Sun>
+*** TODO Histone demarcation
+*** TODO Merck-Millipore AbSurance Antibody Specificity Testing
+* UROPs Administrative Tasks
+** Register for UROPS online
+   SCHEDULED: <2019-07-19 Fri> DEADLINE: <2019-07-19 Fri>
+*** DONE Check with Greg about status of online UROP posting
+    CLOSED: [2019-07-18 Thu 20:16] SCHEDULED: <2019-07-18 Thu>

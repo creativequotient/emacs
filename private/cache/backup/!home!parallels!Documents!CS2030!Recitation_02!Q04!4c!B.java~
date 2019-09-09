@@ -1,0 +1,6 @@
+class B extends A {
+    void () {
+	super.f();
+	System.out.println("B f");
+    }
+}

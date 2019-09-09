@@ -1,0 +1,11 @@
+abstract class SolidShape {
+    public abstract double getVolume();
+
+    public double getDensity() {
+	return this.density;
+    }
+
+    public double getMass() {
+	return this.getDensity() * this.getVolume();
+    }
+}

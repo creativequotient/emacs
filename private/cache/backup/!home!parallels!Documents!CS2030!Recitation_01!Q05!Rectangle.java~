@@ -1,0 +1,21 @@
+public class Rectangle {
+    public double height;
+    public double width;
+
+    public Rectangle(double height, double width) {
+	this.height = height;
+	this.width = width;
+    }
+
+    public Rectangle setWidth(double width) {
+	return new Rectangle(this.height, width);
+    }
+
+    public Rectangle setHeight(double height) {
+	return new Rectangle(height, this.width);
+    }
+
+    public String toString() {
+	return String.format("area %d.2 and perimeter %d.2", height * height, height * 2 + width * 2);
+    }
+}

@@ -1,0 +1,1 @@
+("/media/psf/OSX/org-files/" "/media/psf/OSX/.emacs.d/" "~/Documents/CS2030/" "~/org-files/" "~/.emacs.d/")

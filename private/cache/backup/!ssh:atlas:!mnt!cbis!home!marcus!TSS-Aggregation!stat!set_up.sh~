@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#Move files into appropriate directories
+results_dir="/mnt/gtklab01/marcus/data/testing_data/STAT1_independent/results"
+fastq_dir="/mnt/gtklab01/marcus/data/testing_data/STAT1_independent/fastq"
+mkdir ${results_dir}
+mkdir ${fastq_dir}
+
+# while read filename; do
+#     mkdir /mnt/cbis/home/marcus/IFN/fastq/${filename}/
+#     mv ${filename}.sra /mnt/cbis/home/marcus/IFN/fastq/${filename}/${filename}.sra
+# done < /mnt/cbis/home/marcus/IFN/SRR_Acc_List.txt
+
+while read filename; do
+    mkdir ${results_dir}/${filename}
+    fastq-dump --split-files \
+	       --gzip \
+	       -O ${fastq_dir}/${filename} \
+	       ${fastq_dir}/${filename}/${filename}.sra
+    kallisto quant \
+	     -i /mnt/gtklab01/marcus/data/reference_data/Homo_sapiens.GRCh38.cdna.all.idx \
+	     -b 100 \
+	     -t 32 \
+	     -o ${results_dir}/${filename}/ \
+	     <(zcat ${fastq_dir}/${filename}/${filename}_1.fastq.gz) \
+	     <(zcat ${fastq_dir}/${filename}/${filename}_2.fastq.gz)
+done < /mnt/gtklab01/marcus/data/testing_data/STAT1_independent/STAT2_IRF9_1/SRR_Acc_List.txt
