@@ -1,7 +1,0 @@
-#!bin/bash
-
-kallisto_idx="/mnt/cbis/home/marcus/TSS-Aggregation/data/reference_data/Homo_sapiens.GRCh38.cdna.all.idx"
-batch_file="/mnt/raid0/home/marcus/TGFb_TCC/batch.txt"
-output_dir="/mnt/raid0/home/marcus/TGFb_TCC/"
-
-kallisto pseudo -i ${kallisto_idx} -t 24 -o ${output_dir} -b ${batch_file}

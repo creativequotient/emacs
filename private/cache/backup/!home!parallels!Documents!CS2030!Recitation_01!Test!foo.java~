@@ -1,6 +1,0 @@
-public class foo {
-    @Override
-    public String toString() {
-	return "FOO!";
-    }
-}
