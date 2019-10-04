@@ -43,7 +43,8 @@
                                         ("null"   . ?∅)
                                         ("in"     . ?∈)
                                         ("not in" . ?∉)
-                                        ;;("return" . ?➡)))
+                                        ;;("return" . ?➡)
+					))
   (defun prettify-symbols-hook ()
     "Set pretty symbols for programming modes."
     (setq prettify-symbols-alist
