@@ -48,8 +48,7 @@
   (defun prettify-symbols-hook ()
     "Set pretty symbols for programming modes."
     (setq prettify-symbols-alist
-          (append '(("==" . ?≡)
-                    ("!=" . ?≠)) base-prettify-symbols-alist)))
+          (append '(("!=" . ?≠)) base-prettify-symbols-alist)))
   (add-hook 'prog-mode-hook 'prettify-symbols-hook)
   (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-hook)
   (setq prettify-symbols-unprettify-at-point 'right-edge))
