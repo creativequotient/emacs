@@ -55,10 +55,10 @@
   :config
   (hlinum-activate))
 
-(use-package linum
-  :config
-  (setq linum-format " %3d ")
-  (global-linum-mode nil))
+;; (use-package linum
+;;   :config
+;;   (setq linum-format " %3d ")
+;;   (global-linum-mode nil))
 
 (use-package magit
   :config
@@ -148,22 +148,24 @@
 
 (use-package wgrep)
 
-;; (use-package yasnippet
-;;   :config
-;;   (yas-global-mode 1))
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
+(use-package yasnippet-snippets
+   :ensure t)
 
 (use-package rainbow-mode
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode))
 
-(use-package nyan-mode
-  :if window-system
-  :ensure t
-  :config
-  (nyan-mode)
-  (nyan-start-animation)
-)
+;; (use-package nyan-mode
+;;   :if window-system
+;;   :ensure t
+;;   :config
+;;   (nyan-mode)
+;;   (nyan-start-animation)
+;; )
 
 (provide 'base-extensions)

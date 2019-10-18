@@ -5,6 +5,7 @@
                          ("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
 			 ("elpy"  . "http://jorgenschaefer.github.io/packages/")))
+
 (package-initialize)
 
 ;; Bootstrap `use-package`

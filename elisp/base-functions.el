@@ -31,26 +31,45 @@
   :config
   (defvar base-prettify-symbols-alist '(("<=" . ?≤)
                                         (">=" . ?≥)
-                                        ;;("<-" . ?←)
-                                        ;;("->" . ?→)
                                         ("!=" . ?≠)
                                         ("lambda" . ?λ)
-                                        ;;("def"    . ?ƒ)
-                                        ;;("sum"    . ?Σ)
-                                        ;;("**2"    . ?²)
-                                        ;;("**3"    . ?³)
                                         ("None"   . ?∅)
                                         ("null"   . ?∅)
                                         ("in"     . ?∈)
-                                        ("not in" . ?∉)
-                                        ;;("return" . ?➡)
-					))
+                                        ("not in" . ?∉)))
   (defun prettify-symbols-hook ()
-    "Set pretty symbols for programming modes."
-    (setq prettify-symbols-alist
-          (append '(("!=" . ?≠)) base-prettify-symbols-alist)))
+    (setq prettify-symbols-alist base-prettify-symbols-alist))
   (add-hook 'prog-mode-hook 'prettify-symbols-hook)
   (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-hook)
   (setq prettify-symbols-unprettify-at-point 'right-edge))
+
+(use-package pdf-tools
+    :ensure t
+    :config
+    (pdf-tools-install)
+    (setq-default pdf-view-display-size 'fit-page)
+    (bind-keys :map pdf-view-mode-map
+        ("\\" . hydra-pdftools/body)
+        ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
+        ("g"  . pdf-view-first-page)
+        ("G"  . pdf-view-last-page)
+        ("l"  . image-forward-hscroll)
+        ("h"  . image-backward-hscroll)
+        ("j"  . pdf-view-next-page)
+        ("k"  . pdf-view-previous-page)
+        ("e"  . pdf-view-goto-page)
+        ("u"  . pdf-view-revert-buffer)
+        ("al" . pdf-annot-list-annotations)
+        ("ad" . pdf-annot-delete)
+        ("aa" . pdf-annot-attachment-dired)
+        ("am" . pdf-annot-add-markup-annotation)
+        ("at" . pdf-annot-add-text-annotation)
+        ("y"  . pdf-view-kill-ring-save)
+        ("i"  . pdf-misc-display-metadata)
+        ("s"  . pdf-occur)
+        ("b"  . pdf-view-set-slice-from-bounding-box)
+        ("r"  . pdf-view-reset-slice))
+     (use-package org-pdfview
+       :ensure t))
 
 (provide 'base-functions)
