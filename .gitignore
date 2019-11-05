@@ -1,1 +1,8 @@
-/elpa
+# Ignore everything
+*
+
+# Include these directories and files
+!README.md
+!elip/
+!init.el
+!snippets/
