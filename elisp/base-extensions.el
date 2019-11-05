@@ -51,9 +51,9 @@
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
-(use-package hlinum
-  :config
-  (hlinum-activate))
+;; (use-package hlinum
+;;   :config
+;;   (hlinum-activate))
 
 ;; (use-package linum
 ;;   :config
@@ -155,11 +155,6 @@
 
 (use-package yasnippet-snippets
    :ensure t)
-
-(use-package rainbow-mode
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-mode))
 
 ;; (use-package nyan-mode
 ;;   :if window-system
