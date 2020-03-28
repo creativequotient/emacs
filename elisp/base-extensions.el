@@ -6,11 +6,11 @@
   :config
   (dashboard-setup-startup-hook))
 
-(use-package ediff
-  :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq-default ediff-highlight-all-diffs 'nil)
-  (setq ediff-diff-options "-w"))
+;; (use-package ediff
+;;   :config
+;;   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;;   (setq-default ediff-highlight-all-diffs 'nil)
+;;   (setq ediff-diff-options "-w"))
 
 (use-package exec-path-from-shell
   :config
@@ -24,8 +24,7 @@
   :bind
   ("C-=" . er/expand-region))
 
-(use-package flycheck)
-
+;; (use-package flycheck)
 
 (use-package counsel
   :bind
@@ -37,14 +36,15 @@
 (use-package counsel-projectile
   :bind
   ("C-x v" . counsel-projectile)
-  ("C-x c p" . counsel-projectile-ag)
-  :config
-  (counsel-projectile-on))
+  ;; ("C-x c p" . counsel-projectile-ag)
+  ;; :config
+  ;; (counsel-projectile-on)
+  )
 
 (use-package ivy
   :bind
   ("C-x s" . swiper)
-  ("C-x C-r" . ivy-resume)
+  ;; ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)
@@ -84,16 +84,16 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C->" . mc/mark-all-like-this))
 
-(use-package org
-  :config
-  (setq org-directory "~/org-files"
-        org-default-notes-file (concat org-directory "/todo.org"))
-  (setq org-log-done 'time)
-  (setq org-agenda-files '("~/org-files"
-                           "~/org-files/school"))
-  :bind
-  ("C-c l" . org-store-link)
-  ("C-c a" . org-agenda))
+;; (use-package org
+;;   :config
+;;   (setq org-directory "~/org-files"
+;;         org-default-notes-file (concat org-directory "/todo.org"))
+;;   (setq org-log-done 'time)
+;;   (setq org-agenda-files '("~/org-files"
+;;                            "~/org-files/school"))
+;;   :bind
+;;   ("C-c l" . org-store-link)
+;;   ("C-c a" . org-agenda))
 
 (use-package org-projectile
   :config
@@ -126,7 +126,7 @@
 
 (use-package smartparens)
 
-(use-package smex)
+;; (use-package smex)
 
 (use-package undo-tree
   :config
@@ -147,7 +147,7 @@
 ;;   ("C-x <left>" . windmove-left)
 ;;   ("C-x <right>" . windmove-right))
 
-(use-package wgrep)
+;; (use-package wgrep)
 
 (use-package yasnippet
   :config
