@@ -8,8 +8,9 @@
 (use-package electric
   :ensure t
   :init
-  (progn
-    (electric-pair-mode 1)))
+  (progn (electric-pair-mode 1))
+  :config
+  (setq-default electric-indent-inhibit t))
 
 (use-package ess
   :ensure t

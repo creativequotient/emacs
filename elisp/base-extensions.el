@@ -6,12 +6,6 @@
   :config
   (dashboard-setup-startup-hook))
 
-;; (use-package ediff
-;;   :config
-;;   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-;;   (setq-default ediff-highlight-all-diffs 'nil)
-;;   (setq ediff-diff-options "-w"))
-
 (use-package exec-path-from-shell
   :config
   ;; Add GOPATH to shell
@@ -35,21 +29,15 @@
 
 (use-package counsel-projectile
   :bind
-  ("C-x v" . counsel-projectile)
-  ;; ("C-x c p" . counsel-projectile-ag)
-  ;; :config
-  ;; (counsel-projectile-on)
-  )
+  ("C-x v" . counsel-projectile))
 
 (use-package ivy
   :bind
   ("C-x s" . swiper)
-  ;; ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
-
 
 (use-package hlinum
   :config
@@ -62,9 +50,7 @@
 
 (use-package magit
   :config
-
   (setq magit-completing-read-function 'ivy-completing-read)
-
   :bind
   ;; Magic
   ("C-x g s" . magit-status)
