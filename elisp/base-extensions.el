@@ -51,14 +51,14 @@
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
-;; (use-package hlinum
-;;   :config
-;;   (hlinum-activate))
+(use-package hlinum
+  :config
+  (hlinum-activate))
 
-;; (use-package linum
-;;   :config
-;;   (setq linum-format " %3d ")
-;;   (global-linum-mode nil))
+(use-package linum
+  :config
+  (setq linum-format " %3d ")
+  (global-linum-mode nil))
 
 (use-package magit
   :config
@@ -163,5 +163,9 @@
 ;;   (nyan-mode)
 ;;   (nyan-start-animation)
 ;; )
+
+(use-package popup-kill-ring
+  :ensure t
+  :bind ("M-y" . popup-kill-ring))
 
 (provide 'base-extensions)
