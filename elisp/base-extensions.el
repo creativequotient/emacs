@@ -18,7 +18,9 @@
   :bind
   ("C-=" . er/expand-region))
 
-;; (use-package flycheck)
+(use-package avy)
+
+(use-package markdown-mode)
 
 (use-package counsel
   :bind
@@ -81,18 +83,18 @@
 ;;   ("C-c l" . org-store-link)
 ;;   ("C-c a" . org-agenda))
 
-(use-package org-projectile
-  :config
-  (org-projectile-per-project)
-  (setq org-projectile-per-project-filepath "todo.org"
-	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
+;; (use-package org-projectile
+;;   :config
+;;   (org-projectile-per-project)
+;;   (setq org-projectile-per-project-filepath "todo.org"
+;; 	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
 
-(use-package org-bullets
-  :config
-  (setq org-hide-leading-stars t)
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (org-bullets-mode t))))
+;; (use-package org-bullets
+;;   :config
+;;   (setq org-hide-leading-stars t)
+;;   (add-hook 'org-mode-hook
+;;             (lambda ()
+;;               (org-bullets-mode t))))
 
 (use-package page-break-lines)
 
@@ -112,8 +114,6 @@
 
 (use-package smartparens)
 
-;; (use-package smex)
-
 (use-package undo-tree
   :config
   ;; Remember undo history
@@ -126,29 +126,12 @@
   :config
   (which-key-mode))
 
-;; (use-package windmove
-;;   :bind
-;;   ("C-x <up>" . windmove-up)
-;;   ("C-x <down>" . windmove-down)
-;;   ("C-x <left>" . windmove-left)
-;;   ("C-x <right>" . windmove-right))
-
-;; (use-package wgrep)
-
 (use-package yasnippet
   :config
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
    :ensure t)
-
-;; (use-package nyan-mode
-;;   :if window-system
-;;   :ensure t
-;;   :config
-;;   (nyan-mode)
-;;   (nyan-start-animation)
-;; )
 
 (use-package popup-kill-ring
   :ensure t
