@@ -31,6 +31,8 @@
   :bind
   ("C-=" . er/expand-region))
 
+(use-package helm-flyspell)
+
 (use-package hlinum
   :config
   (hlinum-activate))
@@ -69,7 +71,9 @@
 
 (use-package magit-popup)
 
-(use-package markdown-mode)
+(use-package markdown-mode
+  :config
+  (add-hook 'markdown-mode-hook 'flyspell-mode))
 
 ;; (use-package multiple-cursors
 ;;   :bind
