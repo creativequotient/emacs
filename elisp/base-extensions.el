@@ -1,6 +1,19 @@
+(use-package avy)
+
 (use-package company
   :config
   (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package counsel
+  :bind
+  ("M-x" . counsel-M-x)
+  ("C-x C-m" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file)
+  ("C-x c k" . counsel-yank-pop))
+
+(use-package counsel-projectile
+  :bind
+  ("C-x v" . counsel-projectile))
 
 (use-package dashboard
   :config
@@ -18,20 +31,9 @@
   :bind
   ("C-=" . er/expand-region))
 
-(use-package avy)
-
-(use-package markdown-mode)
-
-(use-package counsel
-  :bind
-  ("M-x" . counsel-M-x)
-  ("C-x C-m" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-x c k" . counsel-yank-pop))
-
-(use-package counsel-projectile
-  :bind
-  ("C-x v" . counsel-projectile))
+(use-package hlinum
+  :config
+  (hlinum-activate))
 
 (use-package ivy
   :bind
@@ -41,9 +43,9 @@
   (setq ivy-use-virtual-buffers nil)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
-(use-package hlinum
+(use-package ivy-bibtex
   :config
-  (hlinum-activate))
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation))
 
 (use-package linum
   :config
@@ -61,16 +63,20 @@
   ("C-x g p" . magit-push)
   ("C-x g u" . magit-pull)
   ("C-x g e" . magit-ediff-resolve)
-  ("C-x g r" . magit-rebase-interactive))
+  ("C-x g r" . magit-rebase-interactive)
+  ("C-x g f" . magit-fetch)
+  ("C-x g m" . magit-merge))
 
 (use-package magit-popup)
 
-(use-package multiple-cursors
-  :bind
-  ("C-S-c C-S-c" . mc/edit-lines)
-  ("C->" . mc/mark-next-like-this)
-  ("C-<" . mc/mark-previous-like-this)
-  ("C-c C->" . mc/mark-all-like-this))
+(use-package markdown-mode)
+
+;; (use-package multiple-cursors
+;;   :bind
+;;   ("C-S-c C-S-c" . mc/edit-lines)
+;;   ("C->" . mc/mark-next-like-this)
+;;   ("C-<" . mc/mark-previous-like-this)
+;;   ("C-c C->" . mc/mark-all-like-this))
 
 ;; (use-package org
 ;;   :config
@@ -97,6 +103,10 @@
 ;;               (org-bullets-mode t))))
 
 (use-package page-break-lines)
+
+(use-package popup-kill-ring
+  :ensure t
+  :bind ("M-y" . popup-kill-ring))
 
 (use-package projectile
   :config
@@ -131,10 +141,6 @@
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
-   :ensure t)
-
-(use-package popup-kill-ring
-  :ensure t
-  :bind ("M-y" . popup-kill-ring))
+  :ensure t)
 
 (provide 'base-extensions)
