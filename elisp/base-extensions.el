@@ -52,7 +52,7 @@
 (use-package linum
   :config
   (setq linum-format " %3d ")
-  (global-linum-mode nil))
+  (add-hook 'prog-mode-hook 'linum-mode))
 
 (use-package magit
   :config
@@ -73,7 +73,8 @@
 
 (use-package markdown-mode
   :config
-  (add-hook 'markdown-mode-hook 'flyspell-mode))
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+  (add-hook 'markdown-mode-hook 'wc-goal-mode))
 
 ;; (use-package multiple-cursors
 ;;   :bind
@@ -82,44 +83,20 @@
 ;;   ("C-<" . mc/mark-previous-like-this)
 ;;   ("C-c C->" . mc/mark-all-like-this))
 
-;; (use-package org
-;;   :config
-;;   (setq org-directory "~/org-files"
-;;         org-default-notes-file (concat org-directory "/todo.org"))
-;;   (setq org-log-done 'time)
-;;   (setq org-agenda-files '("~/org-files"
-;;                            "~/org-files/school"))
-;;   :bind
-;;   ("C-c l" . org-store-link)
-;;   ("C-c a" . org-agenda))
-
-;; (use-package org-projectile
-;;   :config
-;;   (org-projectile-per-project)
-;;   (setq org-projectile-per-project-filepath "todo.org"
-;; 	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
-
-;; (use-package org-bullets
-;;   :config
-;;   (setq org-hide-leading-stars t)
-;;   (add-hook 'org-mode-hook
-;;             (lambda ()
-;;               (org-bullets-mode t))))
-
 (use-package page-break-lines)
 
 (use-package popup-kill-ring
   :ensure t
   :bind ("M-y" . popup-kill-ring))
 
-(use-package projectile
-  :config
-  (setq projectile-known-projects-file
-        (expand-file-name "projectile-bookmarks.eld" temp-dir))
+;; (use-package projectile
+;;   :config
+;;   (setq projectile-known-projects-file
+;;         (expand-file-name "projectile-bookmarks.eld" temp-dir))
 
-  (setq projectile-completion-system 'ivy)
+;;   (setq projectile-completion-system 'ivy)
 
-  (projectile-global-mode))
+;;   (projectile-global-mode))
 
 (use-package recentf
   :config

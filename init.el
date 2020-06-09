@@ -11,7 +11,7 @@
 (require 'base-extensions)
 (require 'base-functions)
 (require 'base-global-keys)
-
+(require 'org-functions)
 (require 'lang-python)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))

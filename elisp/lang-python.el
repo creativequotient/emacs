@@ -27,7 +27,7 @@
 (use-package py-autopep8)
 
 (use-package pyvenv
-  :config (setenv "WORKON_HOME" "/Users/lemon/opt/anaconda3/envs"))
+  :config (setenv "WORKON_HOME" "/home/minerva/anaconda3/envs"))
 
 (provide 'lang-python)
 ;;; base-python.el ends here
