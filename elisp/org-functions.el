@@ -13,11 +13,6 @@
          "* TODO %?\n SCHEDULED: %t")
         ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a")))
-  ;; (setq org-latex-pdf-process
-  ;;     '("pdflatex -interaction nonstopmode -output-directory %o %f"
-  ;;       "bibtex %b"
-  ;;       "pdflatex -interaction nonstopmode -output-directory %o %f"
-  ;;       "pdflatex -interaction nonstopmode -output-directory %o %f"))
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda)
@@ -28,6 +23,13 @@
 ;;   (org-projectile-per-project)
 ;;   (setq org-projectile-per-project-filepath "todo.org"
 ;; 	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
+
+(use-package org-journal
+  :ensure t
+  :defer t
+  :config
+  (setq org-journal-dir "~/org-files/journal/"
+        org-journal-date-format "%A, %d %B %Y"))
 
 (use-package org-bullets
   :config
