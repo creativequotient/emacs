@@ -3,6 +3,7 @@
   :init
   (load-theme 'gruvbox-dark-hard t))
 
+
 (defun disable-all-themes ()
   "disable all active themes."
   (dolist (i custom-enabled-themes)
