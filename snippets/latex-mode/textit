@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: textit
+# key: textit
+# --
+\textit{${1:texts}} $0
