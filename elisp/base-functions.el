@@ -69,8 +69,6 @@
              ("i"  . pdf-misc-display-metadata)
              ("s"  . pdf-occur)
              ("b"  . pdf-view-set-slice-from-bounding-box)
-             ("r"  . pdf-view-reset-slice))
-  (use-package org-pdfview
-    :ensure t))
+             ("r"  . pdf-view-reset-slice)))
 
 (provide 'base-functions)

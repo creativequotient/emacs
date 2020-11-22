@@ -12,7 +12,9 @@
         ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "Unfiled")
          "* TODO %?\n SCHEDULED: %t")
         ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")))
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("r" "Reading" entry (file+headline "~/org-files/readings.org" "Unfiled")
+         "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")))
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda)
