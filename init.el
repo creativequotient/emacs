@@ -33,5 +33,9 @@
                  (tramp-default-port         22)))
   (tramp-set-completion-function "sshx11" tramp-completion-function-alist-ssh))
 
+(setq browse-url-new-window-flag nil)
+(setq browse-url-mozilla-new-window-is-tab nil)
+(setq browse-url-firefox-new-window-is-tab nil)
+
 ;;; Use spaces for automatic indentation
 (setq-default indent-tabs-mode nil)
