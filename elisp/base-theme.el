@@ -1,7 +1,8 @@
-(use-package gruvbox-theme
+(use-package spacemacs-theme
   :defer t
+  :diminish
   :init
-  (load-theme 'gruvbox-dark-hard t))
+  (load-theme 'spacemacs-dark t))
 
 (defun disable-all-themes ()
   "disable all active themes."

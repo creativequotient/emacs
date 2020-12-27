@@ -88,5 +88,8 @@
 ;; Delete trailing whitespace before save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Set up the visual bell
+(setq visible-bell t)
+
 (provide 'base)
 ;;; base ends here

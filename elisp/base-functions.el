@@ -71,4 +71,9 @@
              ("b"  . pdf-view-set-slice-from-bounding-box)
              ("r"  . pdf-view-reset-slice)))
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom (doom-modeline-height 30))
+
 (provide 'base-functions)
