@@ -29,7 +29,7 @@
 (use-package pyvenv
   :config (if (string-equal system-type "gnu/linux")
               (setenv "WORKON_HOME" "/home/minerva/anaconda3/envs")
-              (setenv "WORKON_HOME" "/Users/lemon/opt/anaconda3/envs")
+            (setenv "WORKON_HOME" "/Users/lemon/opt/anaconda3/envs")
             ))
 
 (provide 'lang-python)

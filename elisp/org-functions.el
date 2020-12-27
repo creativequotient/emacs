@@ -7,24 +7,25 @@
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
   (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "Unfiled")
-         "* TODO %?\n Created on %T")
-        ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "Unfiled")
-         "* TODO %?\n SCHEDULED: %t")
-        ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ("r" "Reading" entry (file+headline "~/org-files/readings.org" "Unfiled")
-         "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")))
+        '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* TODO %?\n Created on %T")
+          ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* TODO %?\n SCHEDULED: %t")
+          ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")
+          ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
+           "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")))
+  (setq org-image-actual-width nil)
+  (setq org-link-frame-setup
+        '((vm . vm-visit-folder-other-frame)
+          (vm-imap . vm-visit-imap-folder-other-frame)
+          (gnus . org-gnus-no-new-news)
+          (file . find-file)
+          (wl . wl-other-frame)))
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda)
   ("C-c o" . org-capture))
-
-;; (use-package org-projectile
-;;   :config
-;;   (org-projectile-per-project)
-;;   (setq org-projectile-per-project-filepath "todo.org"
-;; 	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
 
 (use-package org-journal
   :ensure t
@@ -32,6 +33,11 @@
   :config
   (setq org-journal-dir "~/org-files/journal/"
         org-journal-date-format "%A, %d %B %Y"))
+
+(use-package org-roam
+  :config
+  (setq org-roam-directory "~/org-roam/")
+  (setq org-roam-db-update-method 'immediate))
 
 (use-package org-bullets
   :config
@@ -43,7 +49,7 @@
 (use-package org-ref
   :config
   (setq  org-latex-pdf-process
-       '("latexmk -shell-escape -bibtex -pdf %f")))
+         '("latexmk -shell-escape -bibtex -pdf %f")))
 
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
@@ -62,21 +68,27 @@
                           (org-agenda-skip-if nil '(scheduled deadline))))
                     (org-agenda-overriding-header "ALL normal priority tasks:")))
           (agenda ""
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-files '("~/org-files/duckie.org"))
-                 (org-agenda-span 'year)
-                 (org-agenda-show-all-dates nil)
-                 (org-agenda-overriding-header "Duck and Cat:")))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-files '("~/org-files/duckie.org"))
+                   (org-agenda-span 'year)
+                   (org-agenda-show-all-dates nil)
+                   (org-agenda-overriding-header "Duck and Cat:")))
           (todo ""
                 ((org-agenda-files '("~/org-files/readings.org"))
                  (org-agenda-overriding-header "Reading list:"))))
-          ((org-agenda-compact-blocks nil)))))
+         ((org-agenda-compact-blocks nil)))))
 
+(use-package org-download
+  :after org
+  :bind
+  (:map org-mode-map
+        (("s-Y" . org-download-screenshot)
+         ("s-y" . org-download-yank))))
 
 (defun my/org-skip-subtree-if-priority (priority)
   "Skip an agenda subtree if it has a priority of PRIORITY.
 
-PRIORITY may be one of the characters ?A, ?B, or ?C."
+   PRIORITY may be one of the characters ?A, ?B, or ?C."
   (let ((subtree-end (save-excursion (org-end-of-subtree t)))
         (pri-value (* 1000 (- org-lowest-priority priority)))
         (pri-current (org-get-priority (thing-at-point 'line t))))
@@ -91,15 +103,5 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (if (member tag file-tags)
         subtree-end
       nil)))
-
-(setq org-roam-directory "~/Desktop/roam-testing")
-;; (setq org-roam-db-update-method "immediate")
-(setq org-roam-db-update-method 'immediate)
-(setq org-link-frame-setup
-   '((vm . vm-visit-folder-other-frame)
-     (vm-imap . vm-visit-imap-folder-other-frame)
-     (gnus . org-gnus-no-new-news)
-     (file . find-file)
-     (wl . wl-other-frame)))
 
 (provide 'org-functions)
