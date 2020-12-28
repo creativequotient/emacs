@@ -33,10 +33,6 @@
 
 (use-package helm-flyspell)
 
-(use-package hlinum
-  :config
-  (hlinum-activate))
-
 (use-package ivy
   :bind
   ("C-x s" . swiper)
@@ -45,14 +41,13 @@
   (setq ivy-use-virtual-buffers nil)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+
 (use-package ivy-bibtex
   :config
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation))
-
-(use-package linum
-  :config
-  (setq linum-format " %3d ")
-  (add-hook 'prog-mode-hook 'linum-mode))
 
 (use-package magit
   :config
@@ -123,5 +118,11 @@
 
 (use-package yasnippet-snippets
   :ensure t)
+
+;; Set up the visible bell
+(setq visible-bell t)
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
 
 (provide 'base-extensions)
