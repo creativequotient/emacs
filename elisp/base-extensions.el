@@ -132,7 +132,18 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
+;; Linum modes
 (column-number-mode)
 (global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                shell-mode-hook
+                treemacs-mode-hook
+                eshell-mode-hook
+                dashboard-mode-hook
+                dired-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (provide 'base-extensions)
