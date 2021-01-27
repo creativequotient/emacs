@@ -15,7 +15,7 @@
            "* %?\nEntered on %U\n  %i\n  %a")
           ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
            "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")))
-  (setq org-image-actual-width nil)
+  (setq org-image-actual-width 500)
   (setq org-link-frame-setup
         '((vm . vm-visit-folder-other-frame)
           (vm-imap . vm-visit-imap-folder-other-frame)
@@ -57,7 +57,7 @@
                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                  (org-agenda-overriding-header "High-priority unfinished tasks:")))
           (agenda ""
-                  ((org-agenda-span 3)
+                  ((org-agenda-span 7)
 
                    (org-agenda-files (remove "~/org-files/duckie.org"
                                              (file-expand-wildcards (concat (file-name-as-directory (format "%s" (nth 0 org-agenda-files))) "*"))))))
@@ -83,7 +83,8 @@
   :bind
   (:map org-mode-map
         (("s-Y" . org-download-screenshot)
-         ("s-y" . org-download-yank))))
+         ("s-y" . org-download-yank)
+         ("C-s-v" . org-download-clipboard))))
 
 (defun my/org-skip-subtree-if-priority (priority)
   "Skip an agenda subtree if it has a priority of PRIORITY.
@@ -103,5 +104,10 @@
     (if (member tag file-tags)
         subtree-end
       nil)))
+
+(use-package org-tree-slide
+  :diminish (org-tree-slide-mode)
+  :custom
+  (org-image-actual-width nil))
 
 (provide 'org-functions)
