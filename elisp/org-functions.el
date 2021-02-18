@@ -2,19 +2,21 @@
   :config
   (setq org-directory "~/org-files" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
-  (setq org-agenda-files '("~/org-files"))
+  (setq org-agenda-files '("~/org-files" "~/org-files/school"))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-           "* TODO %?\n Created on %T")
+           "* TODO %?\n CREATED: %T")
           ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-           "* TODO %?\n SCHEDULED: %t")
+           "* TODO %?\n CREATED: %T SCHEDULED: %t")
           ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
           ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
-           "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")))
+           "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")
+          ("p" "Property" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* %^g %? %(call-interactively #'org-set-property)")))
   (setq org-image-actual-width 500)
   (setq org-link-frame-setup
         '((vm . vm-visit-folder-other-frame)

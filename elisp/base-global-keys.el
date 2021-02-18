@@ -8,10 +8,10 @@
 (define-key flyspell-mode-map (kbd "C-:") 'helm-flyspell-correct)
 
 (set-register ?o (cons 'file "~/org-files"))
-(set-register ?s (cons 'file "~/org-files/school.org"))
+(set-register ?s (cons 'file "~/org-files/school"))
 (set-register ?e (cons 'file "~/.emacs.d"))
 (set-register ?j (cons 'file "~/work/scratch"))
-(set-register ?m (cons 'file "~/Projects/multiagentrl"))
-(set-register ?M (cons 'file "~/Dropbox/MARL"))
+(set-register ?p (cons 'file "~/Projects/"))
+(set-register ?n (cons 'file "~/Dropbox/nus"))
 
 (provide 'base-global-keys)
