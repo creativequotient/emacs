@@ -1,8 +1,14 @@
-(use-package spacemacs-theme
+;; (use-package spacemacs-theme
+;;   :defer t
+;;   :diminish
+;;   :init
+;;   (load-theme 'spacemacs-dark t))
+
+(use-package leuven-theme
   :defer t
   :diminish
   :init
-  (load-theme 'spacemacs-dark t))
+  (load-theme 'leuven t))
 
 (defun disable-all-themes ()
   "disable all active themes."
