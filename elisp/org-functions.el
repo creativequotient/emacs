@@ -2,7 +2,7 @@
   :config
   (setq org-directory "~/org-files" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
-  (setq org-agenda-files '("~/org-files"))
+  (setq org-agenda-files '("~/org-files" "~/org-files/school"))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
