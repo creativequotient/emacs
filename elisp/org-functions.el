@@ -24,6 +24,8 @@
           (gnus . org-gnus-no-new-news)
           (file . find-file)
           (wl . wl-other-frame)))
+  (setq org-download-image-org-width 500)
+  (setq org-download-image-latex-width 10)
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda)
