@@ -146,4 +146,11 @@
                 dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+(setq remote-file-name-inhibit-cache nil)
+(setq vc-ignore-dir-regexp
+      (format "%s\\|%s"
+                    vc-ignore-dir-regexp
+                    tramp-file-name-regexp))
+(setq tramp-verbose 1)
+
 (provide 'base-extensions)
