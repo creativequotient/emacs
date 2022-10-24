@@ -39,3 +39,4 @@
 
 ;;; Use spaces for automatic indentation
 (setq-default indent-tabs-mode nil)
+(put 'downcase-region 'disabled nil)

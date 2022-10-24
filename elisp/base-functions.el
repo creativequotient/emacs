@@ -12,37 +12,11 @@
   :config
   (setq-default electric-indent-inhibit t))
 
-(use-package ess
-  :ensure t
-  :config
-  (setq ess-eval-visibly 'nowait))
-
 (use-package rainbow-mode
   :init
   (add-hook 'prog-mode-hook 'rainbow-mode)
   :config
-  (rainbow-mode t) ;; #0af
-  )
-
-;; Pretty mode
-;; Base set of pretty symbols.
-(use-package pretty-symbols
-  :init
-  (global-prettify-symbols-mode 1)
-  :config
-  (defvar base-prettify-symbols-alist '(("<=" . ?≤)
-                                        (">=" . ?≥)
-                                        ("!=" . ?≠)
-                                        ("lambda" . ?λ)
-                                        ("None"   . ?∅)
-                                        ("null"   . ?∅)
-                                        ("in"     . ?∈)
-                                        ("not in" . ?∉)))
-  (defun prettify-symbols-hook ()
-    (setq prettify-symbols-alist base-prettify-symbols-alist))
-  (add-hook 'prog-mode-hook 'prettify-symbols-hook)
-  (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-hook)
-  (setq prettify-symbols-unprettify-at-point 'right-edge))
+  (rainbow-mode t))
 
 (use-package pdf-tools
   :ensure t

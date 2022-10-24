@@ -7,7 +7,6 @@
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
-  ("C-x C-m" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-x c k" . counsel-yank-pop))
 
@@ -81,13 +80,6 @@
   (add-hook 'markdown-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'wc-goal-mode))
 
-;; (use-package multiple-cursors
-;;   :bind
-;;   ("C-S-c C-S-c" . mc/edit-lines)
-;;   ("C->" . mc/mark-next-like-this)
-;;   ("C-<" . mc/mark-previous-like-this)
-;;   ("C-c C->" . mc/mark-all-like-this))
-
 (use-package page-break-lines)
 
 (use-package popup-kill-ring
@@ -123,6 +115,7 @@
   (which-key-mode))
 
 (use-package yasnippet
+  :ensure t
   :config
   (yas-global-mode 1))
 
@@ -140,7 +133,6 @@
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 shell-mode-hook
-                treemacs-mode-hook
                 eshell-mode-hook
                 dashboard-mode-hook
                 dired-mode-hook))
