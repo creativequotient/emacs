@@ -3,20 +3,48 @@
   (setq org-directory "~/org-files" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
   (setq org-agenda-files '("~/org-files"))
+  (setq org-agenda-custom-commands
+      '(("c" "Simple agenda view"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (agenda ""
+                  ((org-agenda-span 7)
+
+                   ;; (org-agenda-files (remove "~/org-files/duckie.org"
+                   ;;                           (file-expand-wildcards (concat (file-name-as-directory (format "%s" (nth 0 org-agenda-files))) "*"))))
+                   ))
+          (alltodo ""
+                   ((org-agenda-skip-function
+                     '(or (my/org-skip-subtree-if-priority ?A)
+                          (my/org-skip-subtree-if-tag "@literature")
+                          (org-agenda-skip-if nil '(scheduled deadline))))
+                    (org-agenda-overriding-header "ALL normal priority tasks:")))
+          ;; (agenda ""
+          ;;         ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+          ;;          (org-agenda-files '("~/org-files/duckie.org"))
+          ;;          (org-agenda-span 'year)
+          ;;          (org-agenda-show-all-dates nil)
+          ;;          (org-agenda-overriding-header "Duck and Cat:")))
+          ;; (todo ""
+          ;;       ((org-agenda-files '("~/org-files/readings.org"))
+          ;;        (org-agenda-overriding-header "Reading list:")))
+          )
+         ((org-agenda-compact-blocks nil)))))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
-  ;; (setq org-capture-templates
-  ;;       '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-  ;;          "* TODO %?\n CREATED: %T")
-  ;;         ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-  ;;          "* TODO %?\n CREATED: %T SCHEDULED: %t")
-  ;;         ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
-  ;;          "* %?\nEntered on %U\n  %i\n  %a")
-  ;;         ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
-  ;;          "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")
-  ;;         ("p" "Property" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-  ;;          "* %^g %? %(call-interactively #'org-set-property)")))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* TODO %?\n CREATED: %T")
+          ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* TODO %?\n CREATED: %T SCHEDULED: %t")
+          ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")
+          ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
+           "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")
+          ("p" "Property" entry (file+headline "~/org-files/organizer.org" "To-Refile")
+           "* %^g %? %(call-interactively #'org-set-property)")))
   (setq org-image-actual-width 500)
   (setq org-link-frame-setup
         '((vm . vm-visit-folder-other-frame)
@@ -31,18 +59,9 @@
   ("C-c a" . org-agenda)
   ("C-c o" . org-capture))
 
-(use-package org-journal
-  :ensure t
-  :defer t
-  :config
-  (setq org-journal-dir "~/org-files/journal/"
-        org-journal-date-format "%A, %d %B %Y")
-  (org-roam-db-autosync-mode))
-
 (use-package org-roam
   :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/org-roam"))
+  :custom (org-roam-directory (file-truename "~/org-roam"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
@@ -68,33 +87,6 @@
   :config
   (setq  org-latex-pdf-process
          '("latexmk -shell-escape -bibtex -pdf %f")))
-
-;; (setq org-agenda-custom-commands
-;;       '(("c" "Simple agenda view"
-;;          ((tags "PRIORITY=\"A\""
-;;                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-;;                  (org-agenda-overriding-header "High-priority unfinished tasks:")))
-;;           (agenda ""
-;;                   ((org-agenda-span 7)
-
-;;                    (org-agenda-files (remove "~/org-files/duckie.org"
-;;                                              (file-expand-wildcards (concat (file-name-as-directory (format "%s" (nth 0 org-agenda-files))) "*"))))))
-;;           (alltodo ""
-;;                    ((org-agenda-skip-function
-;;                      '(or (my/org-skip-subtree-if-priority ?A)
-;;                           (my/org-skip-subtree-if-tag "@literature")
-;;                           (org-agenda-skip-if nil '(scheduled deadline))))
-;;                     (org-agenda-overriding-header "ALL normal priority tasks:")))
-;;           (agenda ""
-;;                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-;;                    (org-agenda-files '("~/org-files/duckie.org"))
-;;                    (org-agenda-span 'year)
-;;                    (org-agenda-show-all-dates nil)
-;;                    (org-agenda-overriding-header "Duck and Cat:")))
-;;           (todo ""
-;;                 ((org-agenda-files '("~/org-files/readings.org"))
-;;                  (org-agenda-overriding-header "Reading list:"))))
-;;          ((org-agenda-compact-blocks nil)))))
 
 (use-package org-download
   :after org
