@@ -4,21 +4,7 @@
 
 ;;; Code:
 
-(use-package python
-  :mode ("\\.py" . python-mode)
-  :config
-  (use-package elpy
-    :init
-    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-    :config
-    (setq elpy-rpc-backend "jedi")
-    (setq elpy-rpc-virtualenv-path 'current)
-    ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-    ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
-    :bind (:map elpy-mode-map
-                ("M-." . elpy-goto-definition)
-                ("M-," . pop-tag-mark)))
-  (elpy-enable))
+(use-package python)
 
 (use-package pip-requirements
   :config
@@ -27,10 +13,17 @@
 (use-package py-autopep8)
 
 (use-package pyvenv
-  :config (if (string-equal system-type "gnu/linux")
+  :config
+  (if (string-equal system-type "gnu/linux")
               (setenv "WORKON_HOME" "/home/minerva/anaconda3/envs")
-            (setenv "WORKON_HOME" "/Users/lemon/opt/anaconda3/envs")
-            ))
+            (setenv "WORKON_HOME" "/Users/omelettes/opt/anaconda3/envs"))
+  (pyvenv-workon "blockchain"))
+
+(use-package lsp-mode
+  :hook
+  (python-mode . lsp-deferred)
+  (js-mode . lsp-deferred)
+  :commands (lsp lsp-deferred))
 
 (provide 'lang-python)
 ;;; base-python.el ends here

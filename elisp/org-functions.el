@@ -1,50 +1,52 @@
+(defun my-org-agenda-skip-all-siblings-but-first ()
+  "Skip all but the first non-done entry."
+  (let (should-skip-entry)
+    (unless (org-current-is-todo)
+      (setq should-skip-entry t))
+    (save-excursion
+      (while (and (not should-skip-entry) (org-goto-sibling t))
+        (when (org-current-is-todo)
+          (setq should-skip-entry t))))
+    (when should-skip-entry
+      (or (outline-next-heading)
+          (goto-char (point-max))))))
+
+(defun org-current-is-todo ()
+  (string= "TODO" (org-get-todo-state)))
+
 (use-package org
   :config
   (setq org-directory "~/org-files" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
-  (setq org-agenda-files '("~/org-files"))
+  (setq org-agenda-files '("~/gtd/inbox.org"
+                           "~/gtd/gtd.org"
+                           "~/gtd/tickler.org"))
   (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
-         ((tags "PRIORITY=\"A\""
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
-          (agenda ""
+         ((agenda ""
                   ((org-agenda-span 7)
-
-                   ;; (org-agenda-files (remove "~/org-files/duckie.org"
-                   ;;                           (file-expand-wildcards (concat (file-name-as-directory (format "%s" (nth 0 org-agenda-files))) "*"))))
                    ))
           (alltodo ""
                    ((org-agenda-skip-function
                      '(or (my/org-skip-subtree-if-priority ?A)
                           (my/org-skip-subtree-if-tag "@literature")
                           (org-agenda-skip-if nil '(scheduled deadline))))
-                    (org-agenda-overriding-header "ALL normal priority tasks:")))
-          ;; (agenda ""
-          ;;         ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-          ;;          (org-agenda-files '("~/org-files/duckie.org"))
-          ;;          (org-agenda-span 'year)
-          ;;          (org-agenda-show-all-dates nil)
-          ;;          (org-agenda-overriding-header "Duck and Cat:")))
-          ;; (todo ""
-          ;;       ((org-agenda-files '("~/org-files/readings.org"))
-          ;;        (org-agenda-overriding-header "Reading list:")))
-          )
-         ((org-agenda-compact-blocks nil)))))
+                    (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
+                    (org-agenda-overriding-header "Projects:"))))
+         ((org-agenda-compact-blocks nil)))
+        ("o" "At the office" tags-todo "@office"
+         ((org-agenda-overriding-header "Office")
+          (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+        ))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-           "* TODO %?\n CREATED: %T")
-          ("s" "Schedule today" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-           "* TODO %?\n CREATED: %T SCHEDULED: %t")
-          ("j" "Journal" entry (file+datetree "~/org-files/journal.org")
-           "* %?\nEntered on %U\n  %i\n  %a")
-          ("r" "Reading" entry (file+headline "~/org-files/readings.org" "To-Refile")
-           "* UNREAD %?\n Created on %T\n [[%^{url}][%^{description}]]")
-          ("p" "Property" entry (file+headline "~/org-files/organizer.org" "To-Refile")
-           "* %^g %? %(call-interactively #'org-set-property)")))
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                 (file+headline "~/gtd/inbox.org" "Tasks")
+                                 "* TODO %i%?")
+                                ("T" "Tickler" entry
+                                 (file+headline "~/gtd/tickler.org" "Tickler")
+                                 "* %i%? \n %U")))
   (setq org-image-actual-width 500)
   (setq org-link-frame-setup
         '((vm . vm-visit-folder-other-frame)
@@ -54,6 +56,8 @@
           (wl . wl-other-frame)))
   (setq org-download-image-org-width 500)
   (setq org-download-image-latex-width 10)
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda)
@@ -95,6 +99,10 @@
         (("s-Y" . org-download-screenshot)
          ("s-y" . org-download-yank)
          ("C-s-v" . org-download-clipboard))))
+
+(use-package org-cliplink
+  :ensure t
+  :bind (("C-c l" . org-cliplink)))
 
 (defun my/org-skip-subtree-if-priority (priority)
   "Skip an agenda subtree if it has a priority of PRIORITY.
