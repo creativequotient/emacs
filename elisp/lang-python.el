@@ -10,14 +10,14 @@
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
-(use-package py-autopep8)
+;; (use-package py-autopep8)
 
-(use-package pyvenv
-  :config
-  (if (string-equal system-type "gnu/linux")
-              (setenv "WORKON_HOME" "/home/minerva/anaconda3/envs")
-            (setenv "WORKON_HOME" "/Users/omelettes/opt/anaconda3/envs"))
-  (pyvenv-workon "blockchain"))
+;; (use-package pyvenv
+;;   :config
+;;   (if (string-equal system-type "gnu/linux")
+;;               (setenv "WORKON_HOME" "/home/minerva/anaconda3/envs")
+;;             (setenv "WORKON_HOME" "/Users/omelettes/opt/anaconda3/envs"))
+;;   (pyvenv-workon "blockchain"))
 
 (use-package lsp-mode
   :hook

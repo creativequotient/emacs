@@ -16,11 +16,11 @@
 
 (use-package org
   :config
-  (setq org-directory "~/org-files" org-default-notes-file (concat org-directory "/organizer.org"))
+  (setq org-directory "~/Documents/org" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
-  (setq org-agenda-files '("~/gtd/inbox.org"
-                           "~/gtd/gtd.org"
-                           "~/gtd/tickler.org"))
+  (setq org-agenda-files '("~/Documents/org/inbox.org"
+                           "~/Documents/org/gtd.org"
+                           "~/Documents/org/tickler.org"))
   (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
          ((agenda ""
@@ -42,10 +42,10 @@
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 1)))
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                                 (file+headline "~/gtd/inbox.org" "Tasks")
+                                 (file+headline "~/Documents/org/inbox.org" "Tasks")
                                  "* TODO %i%?")
                                 ("T" "Tickler" entry
-                                 (file+headline "~/gtd/tickler.org" "Tickler")
+                                 (file+headline "~/Documents/org/tickler.org" "Tickler")
                                  "* %i%? \n %U")))
   (setq org-image-actual-width 500)
   (setq org-link-frame-setup
@@ -65,7 +65,7 @@
 
 (use-package org-roam
   :ensure t
-  :custom (org-roam-directory (file-truename "~/org-roam"))
+  :custom (org-roam-directory (file-truename "~/Documents/org-roam"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
@@ -88,6 +88,7 @@
               (org-bullets-mode t))))
 
 (use-package org-ref
+  :ensure t
   :config
   (setq  org-latex-pdf-process
          '("latexmk -shell-escape -bibtex -pdf %f")))
