@@ -1,3 +1,5 @@
+(use-package all-the-icons)
+
 (use-package avy)
 
 (use-package company

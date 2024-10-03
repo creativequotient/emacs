@@ -1,8 +1,8 @@
-(use-package monokai-theme
+(use-package clues-theme
   :defer t
   :diminish
   :init
-  (load-theme 'monokai t))
+  (load-theme 'clues t))
 
 (defun disable-all-themes ()
   "disable all active themes."
