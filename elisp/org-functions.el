@@ -20,12 +20,8 @@
   (setq org-directory "~/Documents/org" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
   (setq org-agenda-files '("~/Documents/org/inbox.org"
-<<<<<<< HEAD
-                           "~/Documents/org/gtd.org"))
-=======
                            "~/Documents/org/gtd.org"
                            "~/Documents/org/research.org"))
->>>>>>> origin/master
   (setq org-agenda-custom-commands
         '(("c" "Simple agenda view"
            ((agenda ""
