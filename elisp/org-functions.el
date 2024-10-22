@@ -20,24 +20,34 @@
   (setq org-directory "~/Documents/org" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
   (setq org-agenda-files '("~/Documents/org/inbox.org"
+<<<<<<< HEAD
                            "~/Documents/org/gtd.org"))
+=======
+                           "~/Documents/org/gtd.org"
+                           "~/Documents/org/research.org"))
+>>>>>>> origin/master
   (setq org-agenda-custom-commands
-      '(("c" "Simple agenda view"
-         ((agenda ""
-                  ((org-agenda-span 7)
-                   ))
-          (alltodo ""
-                   ((org-agenda-skip-function
-                     '(or (my/org-skip-subtree-if-priority ?A)
-                          (my/org-skip-subtree-if-tag "@literature")
-                          (org-agenda-skip-if nil '(scheduled deadline))))
-                    (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
-                    (org-agenda-overriding-header "Projects:"))))
-         ((org-agenda-compact-blocks nil)))
-        ("o" "At the office" tags-todo "@office"
-         ((org-agenda-overriding-header "Office")
-          (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
-        ))
+        '(("c" "Simple agenda view"
+           ((agenda ""
+                    ((org-agenda-span 7)
+                     ))
+            (alltodo ""
+                     ((org-agenda-files (remove "~/Documents/org/research.org" org-agenda-files))
+                      (org-agenda-skip-function
+                       '(or (my/org-skip-subtree-if-priority ?A)
+                            (my/org-skip-subtree-if-tag "@literature")
+                            (org-agenda-skip-if nil '(scheduled deadline))))
+                      (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
+                      (org-agenda-overriding-header "Projects:")))
+            (alltodo ""
+                     ((org-agenda-overriding-header "Research Topics")
+                      (org-agenda-files '("~/Documents/org/research.org"))
+                      (org-agenda-sorting-strategy '(deadline-up priority-down tag-up)))))
+           ((org-agenda-compact-blocks nil)))
+          ("o" "At the office" tags-todo "@office"
+           ((org-agenda-overriding-header "Office")
+            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+          ))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 3)))
