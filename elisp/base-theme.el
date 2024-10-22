@@ -1,8 +1,8 @@
-(use-package clues-theme
+(use-package haki-theme
   :defer t
   :diminish
   :init
-  (load-theme 'clues t))
+  (load-theme 'haki t))
 
 (defun disable-all-themes ()
   "disable all active themes."

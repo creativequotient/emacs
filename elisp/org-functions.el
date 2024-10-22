@@ -20,8 +20,7 @@
   (setq org-directory "~/Documents/org" org-default-notes-file (concat org-directory "/organizer.org"))
   (setq org-log-done 'time)
   (setq org-agenda-files '("~/Documents/org/inbox.org"
-                           "~/Documents/org/gtd.org"
-                           "~/Documents/org/tickler.org"))
+                           "~/Documents/org/gtd.org"))
   (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
          ((agenda ""
@@ -41,7 +40,7 @@
         ))
   (setq org-refile-targets
         '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 1)))
+          (org-agenda-files :maxlevel . 3)))
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                  (file+headline "~/Documents/org/inbox.org" "Tasks")
                                  "* TODO %i%?")
