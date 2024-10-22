@@ -1,4 +1,4 @@
-(defun my-org-agenda-skip-all-siblings-but-first ()
+1(defun my-org-agenda-skip-all-siblings-but-first ()
   "Skip all but the first non-done entry."
   (let (should-skip-entry)
     (unless (org-current-is-todo)
